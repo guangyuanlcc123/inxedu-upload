@@ -1,0 +1,18 @@
+project:
+  #日期格式
+  date-format: yyyy-MM-dd
+  time-format: HH:mm:ss
+  projectName: inxedu
+  file:
+    root: D:\svnProject\viodeUpload\
+
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+      enabled: true
+
+server:
+  port: 7001
