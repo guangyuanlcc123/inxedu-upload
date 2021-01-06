@@ -75,10 +75,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- jar包使用 -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!-- jar包使用 -->
             </plugin>
+
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -89,17 +98,7 @@
                     </compilerArguments>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
             <!--使用docker-maven-plugin插件-->
             <plugin>
                 <groupId>com.spotify</groupId>
@@ -142,6 +141,8 @@
                     </resources>
                 </configuration>
             </plugin>
+            <!--使用docker-maven-plugin插件-->
+
         </plugins>
     </build>
 
