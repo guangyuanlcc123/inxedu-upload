@@ -1,0 +1,11 @@
+#  项目读取外部配置所需操作（使用时需要将application.yml文件格式改为txt,本文件格式改为yml）
+spring:
+  application:
+    name: inxedu-upload
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: false
+    config:
+      uri: http://config-service:9904
+      fail-fast: true
