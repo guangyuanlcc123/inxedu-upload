@@ -229,10 +229,10 @@ public class UploadController {
             plupload.setRequest(request);
             String fileName = plupload.getName();
             String ext =  fileName.substring(fileName.lastIndexOf(".")+1);
-            if (!"mp4".equals(ext)) {
-                log.info("文件格式错误，上传失败");
-                return responseErrorData(response, 1, "文件格式错误，上传失败。");
-            }
+//            if (!"mp4".equals(ext)) {
+//                log.info("文件格式错误，上传失败");
+//                return responseErrorData(response, 1, "文件格式错误，上传失败。");
+//            }
             //上传文件
             return this.pluploadUtil(plupload, response, param, ext, request);
         } catch (Exception e) {

@@ -25,6 +25,9 @@
             <button class="layui-btn layui-btn-normal selectButton" id="localUpload" type="button">上传视频</button>
             <div id="localDataQueue" class="mt10"></div>
         </div>
+        <div style="margin: 5px 0px -5px 20px;font-size: 10px;">
+            <span id="num"></span>
+        </div>
     </div>
 </body>
 
@@ -97,7 +100,13 @@
             chunk_size : '1mb',
             flash_swf_url : '/plupload/js/Moxie.swf', //swf文件，当需要使用swf方式进行上传时需要配置该参数
             silverlight_xap_url : '/plupload/js/Moxie.xap', //silverlight文件，当需要使用silverlight方式进行上传时需要配置该参数
-            multi_selection:false
+            multi_selection:false,
+            filters: {
+                max_file_size: '1gb', //最大上传文件大小（格式100b, 10kb, 10mb, 1gb）
+                mime_types: [//允许文件上传类型
+                    {title: "files", extensions: "mpg,m4v,mp4,flv,3gp,mov,avi,rmvb,mkv,wmv"}
+                ]
+            },
         });
 
         //在实例对象上调用init()方法进行初始化
@@ -116,12 +125,12 @@
 
         //文件选择后上传
         uploaderLocalVideo.bind('FileFiltered', function(up, file){
-            if(!/(mp4)$/.test(file.type)){
-                layer.msg("视频类型必须是.mp4格式", {icon: 5, shift: 6});
-                //layer.msg("您上传的图片格式是" + file.type + ",只能上传"+limitType+"图片", {icon: 5, shift: 6});
-                up.removeFile(file);
-                return;
-            }
+            // if(!/(mp4)$/.test(file.type)){
+            //     layer.msg("视频类型必须是.mp4格式", {icon: 5, shift: 6});
+            //     //layer.msg("您上传的图片格式是" + file.type + ",只能上传"+limitType+"图片", {icon: 5, shift: 6});
+            //     up.removeFile(file);
+            //     return;
+            // }
         });
 
         //上传完成填充数据
@@ -170,6 +179,23 @@
 
         uploaderLocalVideo.bind('UploadProgress', function (uploader, file) {
             var percent = file.percent;
+
+            var num = uploaderLocalVideo.total.bytesPerSec / 1024;
+            var fileSize = (file.size / 1024 / 1024).toFixed(1);
+            var loaded = (file.loaded / 1024 / 1024).toFixed(1);
+            var time = fileSize / loaded;
+            if(time >= 60){
+                time = Math.round(time / 60) + " 分钟";
+            }else {
+                time = Math.round(time) + " 秒钟";
+            }
+
+            if(num > 1000){
+                num = (num / 1024).toFixed(1) + " MB/s - " + loaded + " MB，共 " + fileSize + " MB，还剩 " + time ;
+            }else {
+                num = parseInt(num) + " KB/s - " + loaded + " MB，共 " + fileSize + " MB，还剩 " + time ;
+            }
+            $("#num").html(num);
 
             //上传进度展示
             layui.use('element', function(){
