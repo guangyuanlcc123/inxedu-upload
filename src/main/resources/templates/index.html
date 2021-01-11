@@ -183,7 +183,7 @@
             var num = uploaderLocalVideo.total.bytesPerSec / 1024;
             var fileSize = (file.size / 1024 / 1024).toFixed(1);
             var loaded = (file.loaded / 1024 / 1024).toFixed(1);
-            var time = fileSize / loaded;
+            var time = (file.size - file.loaded) / uploaderLocalVideo.total.bytesPerSec;
             if(time >= 60){
                 time = Math.round(time / 60) + " 分钟";
             }else {
