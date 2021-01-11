@@ -72,10 +72,10 @@ public class UploadController {
         try {
             String fileName = multipartFile.getOriginalFilename();
             String ext = fileName.substring(fileName.lastIndexOf(".")+1);
-            if (null == ext || "".equals(ext) || !"MP4".equals(ext.toUpperCase())) {
-                log.info("文件格式错误，上传失败");
-                return responseErrorData(response, 1, "文件格式错误，上传失败。");
-            }
+//            if (null == ext || "".equals(ext) || !"MP4".equals(ext.toUpperCase())) {
+//                log.info("文件格式错误，上传失败");
+//                return responseErrorData(response, 1, "文件格式错误，上传失败。");
+//            }
 
             String targetFilePath =  "/images/upload/" + param + "/" +toString(new Date(), "yyyyMMdd") + "/" + System.currentTimeMillis() + randomString(6) + "." + ext;
             String tempFilePath = "/images/upload/temp/" + fileName;
