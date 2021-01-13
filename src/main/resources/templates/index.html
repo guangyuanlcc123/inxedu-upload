@@ -144,14 +144,24 @@
                 var data = $.parseJSON(result);
 
                 if(data.error == 0){
+                    var videoDuration = data.time;
                     var videoName = data.fileName;
                     var videoSize = data.length;
                     var idVarchar = data.url;
                     var audioElement = new Audio(idVarchar);
-                    audioElement.addEventListener("loadedmetadata", function (_event) {
-                        var videoDuration = audioElement.duration.toFixed(0);
-                        console.log("视频的时长为:",audioElement.duration);//单位：秒
+                    if(videoDuration == null || videoDuration == ""){
+                        audioElement.addEventListener("loadedmetadata", function (_event) {
+                            videoDuration = audioElement.duration.toFixed(0);
+                            console.log("视频的时长为:",audioElement.duration);//单位：秒
+                            parent.postMessage( {code:'1',videoName:videoName,msg: idVarchar,videoSize:videoSize,videoDuration:videoDuration,
+                                videoType:"localhost",status:"finish",fileType:1,initType:1,imageUrl:"/static/inxweb/img/coures.gif"}, '*');
 
+                            setTimeout(function (){
+                                layer.msg("操作成功",{icon: 1, shift: 6})
+                                window.location.reload()
+                            },1000)
+                        });
+                    }else {
                         parent.postMessage( {code:'1',videoName:videoName,msg: idVarchar,videoSize:videoSize,videoDuration:videoDuration,
                             videoType:"localhost",status:"finish",fileType:1,initType:1,imageUrl:"/static/inxweb/img/coures.gif"}, '*');
 
@@ -159,7 +169,8 @@
                             layer.msg("操作成功",{icon: 1, shift: 6})
                             window.location.reload()
                         },1000)
-                    });
+                    }
+
                 }else {
                     parent.postMessage( {code:'-1',msg: '上传失败'}, '*');
                     setTimeout(function (){

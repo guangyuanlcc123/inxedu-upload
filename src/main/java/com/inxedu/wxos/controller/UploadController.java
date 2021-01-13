@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import ws.schild.jave.MultimediaInfo;
+import ws.schild.jave.MultimediaObject;
 
 
 /**
@@ -82,6 +84,8 @@ public class UploadController {
 
             input = multipartFile.getInputStream();
             File targetFile = new File(this.path + targetFilePath);
+            String time = "";
+
             if (!targetFile.getParentFile().exists()) {
                 targetFile.getParentFile().mkdirs();
             }
@@ -107,9 +111,12 @@ public class UploadController {
             }else {
                 log.info("失败");
             }
+            if (targetFile.exists()) {
+                time = ReadVideoTime(targetFile);
+            }
 
             String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            return responseData2(url + targetFilePath, fileName, 0, "上传成功", response,targetFile);
+            return responseData2(url + targetFilePath, fileName, 0, "上传成功", response,targetFile,time);
         } catch (Exception e) {
             log.error("uploadVideo:   ", e);
             return responseErrorData(response, 2, "系统繁忙，上传失败。");
@@ -256,6 +263,8 @@ public class UploadController {
 
         //文件存储路径
         File targetFile = new File(this.path + filePath);
+        //视频播放时间
+        String time = "";
 
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) plupload.getRequest();
         MultiValueMap<String, MultipartFile> map = multipartRequest.getMultiFileMap();
@@ -302,13 +311,31 @@ public class UploadController {
                         /*获取参数cutImg 判断是否切图*/
                         zoomImageUtil(filePath, plupload.getRequest());
                     }
+
+                    if (targetFile.exists()) {
+                        time = ReadVideoTime(targetFile);
+                    }
+
                 }
             }
         }
 
         //返回数据
         String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-        return responseData2(url + filePath, plupload.getName(), 0, "上传成功", response,targetFile);
+        return responseData2(url + filePath, plupload.getName(), 0, "上传成功", response,targetFile,time);
+    }
+
+    public static String ReadVideoTime(File source) {
+        String length = "";
+        try {
+            MultimediaObject instance = new MultimediaObject(source);
+            MultimediaInfo result = instance.getInfo();
+            long ls = Math.round(result.getDuration() / 1000.0);
+            length = ls + "";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return length;
     }
 
     /**
@@ -440,8 +467,9 @@ public class UploadController {
      * @param message  提示信息
      * @return 回调路径
      */
-    public String responseData2(String path, String fileName, int error, String message, HttpServletResponse response,File file) throws IOException {
+    public String responseData2(String path, String fileName, int error, String message, HttpServletResponse response,File file,String time) throws IOException {
         Map<String, Object> map = new HashMap<String, Object>();
+        map.put("time", time);
         map.put("length",file.length());
         map.put("url", path);
         map.put("fileName", fileName);
