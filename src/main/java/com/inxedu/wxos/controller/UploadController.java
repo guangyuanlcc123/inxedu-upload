@@ -113,6 +113,7 @@ public class UploadController {
             }
             if (targetFile.exists()) {
                 time = ReadVideoTime(targetFile);
+                log.info("time:     " + time);
             }
 
             String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
@@ -314,6 +315,7 @@ public class UploadController {
 
                     if (targetFile.exists()) {
                         time = ReadVideoTime(targetFile);
+                        log.info("time:     " + time);
                     }
 
                 }
