@@ -5,6 +5,8 @@ import com.inxedu.wxos.pojo.Plupload;
 import com.inxedu.wxos.util.JsonUtil;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.MultimediaInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -27,8 +29,8 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import ws.schild.jave.MultimediaInfo;
-import ws.schild.jave.MultimediaObject;
+//import ws.schild.jave.MultimediaInfo;
+//import ws.schild.jave.MultimediaObject;
 
 
 /**
@@ -43,6 +45,11 @@ public class UploadController {
 
     @Value("${project.projectName}")
     private String projectName;
+
+    @RequestMapping("add")
+    public String add(){
+        return "add";
+    }
 
     @RequestMapping("index")
     public String index(){
@@ -112,7 +119,11 @@ public class UploadController {
                 log.info("失败");
             }
             if (targetFile.exists()) {
-                time = ReadVideoTime(targetFile);
+//                        time = ReadVideoTime(targetFile);
+                Encoder encoder = new Encoder();
+                MultimediaInfo m = encoder.getInfo(targetFile);
+                long ms = m.getDuration();
+                time = Math.round(ms / 1000.0) + "";
                 log.info("time:     " + time);
             }
 
@@ -314,10 +325,13 @@ public class UploadController {
                     }
 
                     if (targetFile.exists()) {
-                        time = ReadVideoTime(targetFile);
+//                        time = ReadVideoTime(targetFile);
+                        Encoder encoder = new Encoder();
+                        MultimediaInfo m = encoder.getInfo(targetFile);
+                        long ms = m.getDuration();
+                        time = Math.round(ms / 1000.0) + "";
                         log.info("time:     " + time);
                     }
-
                 }
             }
         }
@@ -327,18 +341,21 @@ public class UploadController {
         return responseData2(url + filePath, plupload.getName(), 0, "上传成功", response,targetFile,time);
     }
 
-    public static String ReadVideoTime(File source) {
-        String length = "";
-        try {
-            MultimediaObject instance = new MultimediaObject(source);
-            MultimediaInfo result = instance.getInfo();
-            long ls = Math.round(result.getDuration() / 1000.0);
-            length = ls + "";
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return length;
-    }
+    /**
+     * 使用ffmpeg查询视频文件时长
+     */
+//    public static String ReadVideoTime(File source) {
+//        String length = "";
+//        try {
+//            MultimediaObject instance = new MultimediaObject(source);
+//            MultimediaInfo result = instance.getInfo();
+//            long ls = Math.round(result.getDuration() / 1000.0);
+//            length = ls + "";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return length;
+//    }
 
     /**
      * 保存上传文件，兼合并功能

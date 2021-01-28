@@ -36,41 +36,46 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
+        <dependency>
+            <groupId>it.sauronsoftware</groupId>
+            <artifactId>java</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
-        <dependency>
-            <groupId>ws.schild</groupId>
-            <artifactId>jave-all-deps</artifactId>
-            <version>2.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>ws.schild</groupId>
-            <artifactId>jave-core</artifactId>
-            <version>2.4.5</version>
-        </dependency>
-        <!-- window32位 ffmpeg -->
-        <dependency>
-            <groupId>ws.schild</groupId>
-            <artifactId>jave-native-win32</artifactId>
-            <version>2.4.5</version>
-        </dependency>
-        <!-- window64位 ffmpeg -->
-        <dependency>
-            <groupId>ws.schild</groupId>
-            <artifactId>jave-native-win64</artifactId>
-            <version>2.4.5</version>
-        </dependency>
-        <!-- linux32位 ffmpeg -->
-        <dependency>
-            <groupId>ws.schild</groupId>
-            <artifactId>jave-native-linux32</artifactId>
-            <version>2.4.6</version>
-        </dependency>
-        <!-- linux64位 ffmpeg -->
-        <dependency>
-            <groupId>ws.schild</groupId>
-            <artifactId>jave-native-linux64</artifactId>
-            <version>2.4.6</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>ws.schild</groupId>-->
+<!--            <artifactId>jave-all-deps</artifactId>-->
+<!--            <version>2.6.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>ws.schild</groupId>-->
+<!--            <artifactId>jave-core</artifactId>-->
+<!--            <version>2.4.5</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; window32位 ffmpeg &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>ws.schild</groupId>-->
+<!--            <artifactId>jave-native-win32</artifactId>-->
+<!--            <version>2.4.5</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; window64位 ffmpeg &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>ws.schild</groupId>-->
+<!--            <artifactId>jave-native-win64</artifactId>-->
+<!--            <version>2.4.5</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; linux32位 ffmpeg &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>ws.schild</groupId>-->
+<!--            <artifactId>jave-native-linux32</artifactId>-->
+<!--            <version>2.4.6</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; linux64位 ffmpeg &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>ws.schild</groupId>-->
+<!--            <artifactId>jave-native-linux64</artifactId>-->
+<!--            <version>2.4.6</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
